@@ -119,7 +119,7 @@ function Contact() {
   }, content.contactEmail), /*#__PURE__*/React.createElement("p", null, content.contactPhone), /*#__PURE__*/React.createElement("p", null, content.contactAddress)), /*#__PURE__*/React.createElement("div", {
     className: "contact-col"
   }, /*#__PURE__*/React.createElement("h4", null, "TikTok"), /*#__PURE__*/React.createElement("a", {
-    href: `https://www.tiktok.com/@${(content.tiktokHandle || 'atachilioil').replace(/^@?(TicTok\.)?/i, '')}`,
+    href: `https://www.tiktok.com/@${(content.tiktokHandle || 'atachilioil').replace(/^@?(TikTok\.)?/i, '')}`,
     target: "_blank",
     rel: "noopener"
   }, content.tiktokHandle || '@atachilioil'), /*#__PURE__*/React.createElement("a", {
