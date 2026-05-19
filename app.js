@@ -94,17 +94,13 @@ function Tweaks() {
 // Admin mode: hidden CMS button, exposed only when ?admin=1 is in the URL
 // (or once unlocked, persisted in localStorage). ?admin=0 locks it back.
 function isAdminMode() {
+  // Admin button is ONLY shown when ?admin=1 is in the URL.
+  // No localStorage persistence — every admin visit must include the flag.
   try {
+    // Clean up any old persisted unlock from previous versions.
+    localStorage.removeItem('ata_admin_unlocked');
     const params = new URLSearchParams(window.location.search);
-    if (params.get('admin') === '1') {
-      localStorage.setItem('ata_admin_unlocked', '1');
-      return true;
-    }
-    if (params.get('admin') === '0') {
-      localStorage.removeItem('ata_admin_unlocked');
-      return false;
-    }
-    return localStorage.getItem('ata_admin_unlocked') === '1';
+    return params.get('admin') === '1';
   } catch (e) {
     return false;
   }
