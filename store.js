@@ -1,7 +1,7 @@
 // store.jsx — central state for site content + cart + selected country
 // Uses localStorage to persist edits and cart between visits.
 
-const STORAGE_KEY = 'ata_site_v6';
+const STORAGE_KEY = 'ata_site_v7';
 const CART_KEY = 'ata_cart_v1';
 const COUNTRY_KEY = 'ata_country_v2';
 const CMS_AUTH_KEY = 'ata_cms_auth_v1';
@@ -10,7 +10,7 @@ const CMS_AUTH_KEY = 'ata_cms_auth_v1';
 const CMS_DEFAULT_PASSWORD = 'ata-admin';
 
 // Also clear stale localStorage from old versions when defaults change shape
-const STALE_KEYS = ['ata_site_v1', 'ata_site_v2', 'ata_site_v3', 'ata_site_v4', 'ata_site_v5', 'ata_country_v1'];
+const STALE_KEYS = ['ata_site_v1', 'ata_site_v2', 'ata_site_v3', 'ata_site_v4', 'ata_site_v5', 'ata_site_v6', 'ata_country_v1'];
 function loadContent() {
   try {
     STALE_KEYS.forEach(k => localStorage.removeItem(k));
@@ -55,7 +55,8 @@ function loadCountry() {
   // CMS edits to prices / shipping reflect immediately.
   try {
     const v = localStorage.getItem(COUNTRY_KEY);
-    if (!v) return null;
+    // No saved country yet → fall back to the site's default market (UK).
+    if (!v) return window.__ATA_DEFAULTS && window.__ATA_DEFAULTS.defaultCountryCode || null;
     const parsed = JSON.parse(v);
     return parsed?.code || null;
   } catch (e) {}

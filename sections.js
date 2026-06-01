@@ -3,7 +3,10 @@
 function Shop() {
   const {
     content,
-    addToCart
+    addToCart,
+    country,
+    resolveLine,
+    fmtLocal
   } = useStore();
   return /*#__PURE__*/React.createElement("section", {
     id: "shop",
@@ -19,25 +22,32 @@ function Shop() {
     }
   }, "Bundle & Save"), /*#__PURE__*/React.createElement("p", null, "One spray transforms any plate. Pick a bundle and bring some fire home.")), /*#__PURE__*/React.createElement("div", {
     className: "product-grid"
-  }, content.products.map(p => /*#__PURE__*/React.createElement("article", {
-    key: p.id,
-    className: "product-card",
-    "data-screen-label": `Product · ${p.name}`
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "product-card-img"
-  }, /*#__PURE__*/React.createElement("img", {
-    src: p.image,
-    alt: p.name
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "product-card-body"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "product-card-name"
-  }, p.name), /*#__PURE__*/React.createElement("div", {
-    className: "product-card-size"
-  }, p.size)), /*#__PURE__*/React.createElement("button", {
-    className: "btn btn-primary",
-    onClick: () => addToCart(p.id)
-  }, "Add to cart")))));
+  }, content.products.map(p => {
+    const r = country ? resolveLine(p) : {
+      local: null
+    };
+    return /*#__PURE__*/React.createElement("article", {
+      key: p.id,
+      className: "product-card",
+      "data-screen-label": `Product · ${p.name}`
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "product-card-img"
+    }, /*#__PURE__*/React.createElement("img", {
+      src: p.image,
+      alt: p.name
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "product-card-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "product-card-name"
+    }, p.name), /*#__PURE__*/React.createElement("div", {
+      className: "product-card-size"
+    }, p.size), r.local != null && /*#__PURE__*/React.createElement("div", {
+      className: "product-card-price"
+    }, fmtLocal(r.local))), /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary",
+      onClick: () => addToCart(p.id)
+    }, "Add to cart"));
+  })));
 }
 function About() {
   const {
